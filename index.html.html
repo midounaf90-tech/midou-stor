@@ -1,0 +1,898 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Needs | المتجر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#10243E;
+    --navy-2:#16314F;
+    --steel:#3C5A78;
+    --yellow:#FFC93C;
+    --paper:#F4F1E9;
+    --line:#27405F;
+    --ink:#0C1A2B;
+    --good:#3FA66A;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Tajawal', sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+  }
+
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  /* ===== HEADER ===== */
+  header{
+    background:var(--navy);
+    color:var(--paper);
+    padding:22px 6%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+    border-bottom:3px solid var(--yellow);
+  }
+
+  .logo{
+    font-weight:900;
+    font-size:1.6rem;
+    letter-spacing:1px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .logo .dot{
+    width:12px;height:12px;
+    background:var(--yellow);
+    border-radius:2px;
+    display:inline-block;
+    transform:rotate(45deg);
+  }
+
+  .tagline-mono{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.78rem;
+    color:var(--yellow);
+    opacity:.85;
+    letter-spacing:2px;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    background:linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 60%, var(--steel) 100%);
+    color:var(--paper);
+    padding:70px 6% 90px;
+    position:relative;
+    overflow:hidden;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 28px, rgba(255,201,60,.05) 28px, rgba(255,201,60,.05) 30px);
+    pointer-events:none;
+  }
+
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    max-width:780px;
+  }
+
+  .hero-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--yellow);
+    font-size:.85rem;
+    letter-spacing:3px;
+    margin-bottom:14px;
+    display:inline-block;
+    border:1px solid var(--yellow);
+    padding:5px 14px;
+    border-radius:999px;
+  }
+
+  .hero h1{
+    font-size:clamp(2.2rem, 5vw, 3.6rem);
+    font-weight:900;
+    line-height:1.15;
+    margin-bottom:18px;
+  }
+
+  .hero h1 span{color:var(--yellow);}
+
+  .hero p{
+    font-size:1.05rem;
+    color:#C9D3E0;
+    max-width:540px;
+    margin-bottom:28px;
+  }
+
+  .hero-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--yellow);
+    color:var(--navy);
+    font-weight:700;
+    padding:14px 28px;
+    border-radius:8px;
+    text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+    border:none;
+    cursor:pointer;
+    font-size:1rem;
+    font-family:'Tajawal',sans-serif;
+  }
+
+  .hero-cta:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(255,201,60,.25);
+  }
+
+  /* ===== SECTION HEADER ===== */
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    padding:50px 6% 20px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .section-head h2{
+    font-size:1.8rem;
+    font-weight:900;
+    color:var(--navy);
+  }
+
+  .section-head .count{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.85rem;
+    color:var(--steel);
+    letter-spacing:1px;
+  }
+
+  /* ===== PRODUCT GRID ===== */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    gap:22px;
+    padding:0 6% 70px;
+  }
+
+  .card{
+    background:#fff;
+    border:1px solid #E2DCCB;
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 30px rgba(16,36,62,.12);
+  }
+
+  .card-img{
+    aspect-ratio:1/1;
+    background:#EFEAE0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+  }
+
+  .card-img img{
+    width:100%;height:100%;object-fit:cover;
+  }
+
+  .card-img .ph{
+    font-size:2.4rem;
+    color:var(--steel);
+  }
+
+  .card-body{
+    padding:16px 18px 18px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+    gap:10px;
+  }
+
+  .card-body h3{
+    font-size:1.05rem;
+    font-weight:700;
+    color:var(--navy);
+  }
+
+  .card-body p{
+    font-size:.85rem;
+    color:#6b7280;
+    flex:1;
+  }
+
+  .price-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-top:auto;
+  }
+
+  .price{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:1.15rem;
+    color:var(--navy);
+  }
+
+  .price::after{
+    content:" دج";
+    font-size:.75rem;
+    color:var(--steel);
+  }
+
+  .order-btn{
+    background:var(--navy);
+    color:var(--yellow);
+    border:none;
+    padding:10px 18px;
+    border-radius:7px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:.9rem;
+    font-family:'Tajawal',sans-serif;
+    transition:background .15s ease;
+    white-space:nowrap;
+  }
+
+  .order-btn:hover{background:var(--steel);}
+
+  .empty-state{
+    padding:60px 6%;
+    text-align:center;
+    color:var(--steel);
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  /* ===== MODAL ===== */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(12,26,43,.55);
+    backdrop-filter:blur(3px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:100;
+    padding:20px;
+  }
+
+  .overlay.active{display:flex;}
+
+  .modal{
+    background:#fff;
+    border-radius:14px;
+    max-width:440px;
+    width:100%;
+    padding:30px;
+    position:relative;
+    border-top:5px solid var(--yellow);
+    animation:pop .22s ease;
+  }
+
+  @keyframes pop{
+    from{opacity:0; transform:translateY(14px) scale(.97);}
+    to{opacity:1; transform:translateY(0) scale(1);}
+  }
+
+  .modal h3{
+    color:var(--navy);
+    font-size:1.3rem;
+    margin-bottom:4px;
+  }
+
+  .modal .sub{
+    font-family:'JetBrains Mono', monospace;
+    font-size:.8rem;
+    color:var(--steel);
+    margin-bottom:20px;
+  }
+
+  .modal label{
+    display:block;
+    font-size:.85rem;
+    font-weight:700;
+    color:var(--navy);
+    margin-bottom:6px;
+    margin-top:14px;
+  }
+
+  .modal input{
+    width:100%;
+    padding:11px 14px;
+    border:1.5px solid #DDD6C5;
+    border-radius:8px;
+    font-family:'Tajawal',sans-serif;
+    font-size:.95rem;
+    background:var(--paper);
+  }
+
+  .modal input:focus{
+    outline:none;
+    border-color:var(--yellow);
+    background:#fff;
+  }
+
+  .modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:24px;
+  }
+
+  .btn-primary, .btn-ghost{
+    flex:1;
+    padding:13px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    border:none;
+    font-size:.95rem;
+    font-family:'Tajawal',sans-serif;
+  }
+
+  .btn-primary{background:var(--navy); color:var(--yellow);}
+  .btn-primary:hover{background:var(--steel);}
+  .btn-primary:disabled{opacity:.6; cursor:not-allowed;}
+
+  .btn-ghost{background:transparent; color:var(--steel); border:1.5px solid #DDD6C5;}
+  .btn-ghost:hover{background:#F4F1E9;}
+
+  .close-x{
+    position:absolute;
+    top:14px; left:14px;
+    background:none;
+    border:none;
+    font-size:1.3rem;
+    color:var(--steel);
+    cursor:pointer;
+    line-height:1;
+  }
+
+  .status-msg{
+    margin-top:14px;
+    font-size:.85rem;
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  .status-msg.ok{color:var(--good);}
+  .status-msg.err{color:#D14343;}
+
+  /* ===== WILAYA / DELIVERY ===== */
+  .modal select{
+    width:100%;
+    padding:11px 14px;
+    border:1.5px solid #DDD6C5;
+    border-radius:8px;
+    font-family:'Tajawal',sans-serif;
+    font-size:.95rem;
+    background:var(--paper);
+    color:var(--ink);
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2316314F'><path d='M5.5 7.5l4.5 4.5 4.5-4.5'/></svg>");
+    background-repeat:no-repeat;
+    background-position:left 12px center;
+    background-size:16px;
+  }
+
+  .modal select:focus{
+    outline:none;
+    border-color:var(--yellow);
+    background-color:#fff;
+  }
+
+  .delivery-cards{
+    display:flex;
+    gap:10px;
+    margin-top:6px;
+  }
+
+  .delivery-card{
+    flex:1;
+    border:1.5px solid #DDD6C5;
+    border-radius:8px;
+    padding:14px 10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    text-align:center;
+    transition:border-color .15s ease, background .15s ease;
+    background:var(--paper);
+  }
+
+  .delivery-card:hover{border-color:var(--steel);}
+
+  .delivery-card.selected{
+    border-color:var(--yellow);
+    background:#FFF6DC;
+    box-shadow:inset 0 0 0 1px var(--yellow);
+  }
+
+  .dc-title{font-size:.82rem; font-weight:700; color:var(--navy);}
+  .dc-price{font-family:'JetBrains Mono', monospace; font-size:1rem; font-weight:700; color:var(--navy);}
+
+  .price-summary{
+    margin-top:18px;
+    border-top:1.5px dashed #DDD6C5;
+    padding-top:12px;
+  }
+
+  .ps-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:.88rem;
+    color:var(--steel);
+    padding:4px 0;
+  }
+
+  .ps-row.ps-total{
+    border-top:1px solid #DDD6C5;
+    margin-top:6px;
+    padding-top:8px;
+    font-weight:700;
+    color:var(--navy);
+    font-size:1.1rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:var(--navy);
+    color:#9FB0C5;
+    text-align:center;
+    padding:30px 6%;
+    font-size:.85rem;
+    font-family:'JetBrains Mono', monospace;
+    border-top:3px solid var(--yellow);
+  }
+
+  footer .dot{color:var(--yellow);}
+
+  @media (max-width:600px){
+    header{padding:18px 5%;}
+    .hero{padding:50px 5% 60px;}
+    .section-head{padding:40px 5% 15px;}
+    .grid{padding:0 5% 60px; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:14px;}
+    .card-body{padding:12px 14px 14px;}
+    .price-row{flex-direction:column; align-items:stretch; gap:10px;}
+    .order-btn{width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="dot"></span> :Mr.perfect</div>
+  <div class="tagline-mono">مرحبا بكم</div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">QUALITY · PRICES · DELIVERY</span>
+    <h1>كل ما تحتاجون، <span>فـي بلاصة وحدة.</span></h1>
+    <p>تسوق من تشكيلة متنوعة من المنتجات بأفضل الأسعار. اختار المنتج، عمر الفورم، ونوصلك للدار.</p>
+    <button class="hero-cta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+      شوف المنتجات ↓
+    </button>
+  </div>
+</section>
+
+<div class="section-head" id="products">
+  <h2>المنتجات</h2>
+  <span class="count mono" id="prod-count">...</span>
+</div>
+
+<div class="grid" id="grid">
+  <div class="empty-state">جاري تحميل المنتجات...</div>
+</div>
+
+<!-- Order Modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <button class="close-x" onclick="closeModal()">✕</button>
+    <h3 id="modal-product-name">طلب المنتج</h3>
+    <div class="sub" id="modal-product-price">السعر: -- دج</div>
+
+    <label>الاسم الكامل</label>
+    <input type="text" id="f-name" oninput="checkFormValidity()" placeholder="مثال: محمد نفير">
+
+    <label>رقم الهاتف</label>
+    <input type="tel" id="f-phone" oninput="checkFormValidity()" placeholder="0X XX XX XX XX">
+
+    <label>الولاية</label>
+    <select id="f-wilaya" onchange="onWilayaChange()">
+      <option value="">اختر الولاية...</option>
+    </select>
+
+    <div id="delivery-options" style="display:none;">
+      <label>طريقة التوصيل</label>
+      <div class="delivery-cards">
+        <div class="delivery-card" id="dc-office" onclick="selectDelivery('office')">
+          <span class="dc-title">📍 للمكتب</span>
+          <span class="dc-price" id="dc-office-price">-- دج</span>
+        </div>
+        <div class="delivery-card" id="dc-home" onclick="selectDelivery('home')">
+          <span class="dc-title">🏠 لباب الدار</span>
+          <span class="dc-price" id="dc-home-price">-- دج</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-msg err" id="unavailable-msg" style="display:none;">عذراً، التوصيل غير متوفر لهذه الولاية حالياً</div>
+
+    <div id="address-wrap" style="display:none;">
+      <label>العنوان (الحي / الشارع)</label>
+      <input type="text" id="f-address" oninput="checkFormValidity()" placeholder="مثال: حي النصر، شارع...">
+    </div>
+
+    <div class="price-summary" id="price-summary" style="display:none;">
+      <div class="ps-row"><span>سعر المنتج</span><span class="mono" id="ps-product">-- دج</span></div>
+      <div class="ps-row"><span>سعر التوصيل</span><span class="mono" id="ps-delivery">-- دج</span></div>
+      <div class="ps-row ps-total"><span>الإجمالي</span><span class="mono" id="ps-total">-- دج</span></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">إلغاء</button>
+      <button class="btn-primary" id="submit-btn" onclick="submitOrder()" disabled>تأكيد الطلب</button>
+    </div>
+
+    <div class="status-msg" id="status-msg"></div>
+  </div>
+</div>
+
+<footer>
+  NEEDS <span class="dot">●</span> Constantine, Algeria <span class="dot">●</span> جميع الحقوق محفوظة
+</footer>
+
+<script>
+  /* =========================================================
+     CONFIG — عدّل هذا الرابط فقط بعد إنشاء حساب SheetDB
+     ========================================================= */
+  const SHEETDB_API = "https://sheetdb.io/api/v1/9jjeye7lrsnri";
+
+  /* =========================================================
+     58 ولاية — تستعمل فالقائمة المنسدلة
+     ========================================================= */
+  const WILAYAS = [
+    {code:1,name:"أدرار"},{code:2,name:"الشلف"},{code:3,name:"الأغواط"},{code:4,name:"أم البواقي"},
+    {code:5,name:"باتنة"},{code:6,name:"بجاية"},{code:7,name:"بسكرة"},{code:8,name:"بشار"},
+    {code:9,name:"البليدة"},{code:10,name:"البويرة"},{code:11,name:"تمنراست"},{code:12,name:"تبسة"},
+    {code:13,name:"تلمسان"},{code:14,name:"تيارت"},{code:15,name:"تيزي وزو"},{code:16,name:"الجزائر"},
+    {code:17,name:"الجلفة"},{code:18,name:"جيجل"},{code:19,name:"سطيف"},{code:20,name:"سعيدة"},
+    {code:21,name:"سكيكدة"},{code:22,name:"سيدي بلعباس"},{code:23,name:"عنابة"},{code:24,name:"قالمة"},
+    {code:25,name:"قسنطينة"},{code:26,name:"المدية"},{code:27,name:"مستغانم"},{code:28,name:"المسيلة"},
+    {code:29,name:"معسكر"},{code:30,name:"ورقلة"},{code:31,name:"وهران"},{code:32,name:"البيض"},
+    {code:33,name:"إليزي"},{code:34,name:"برج بوعريريج"},{code:35,name:"بومرداس"},{code:36,name:"الطارف"},
+    {code:37,name:"تيندوف"},{code:38,name:"تيسمسيلت"},{code:39,name:"الوادي"},{code:40,name:"خنشلة"},
+    {code:41,name:"سوق أهراس"},{code:42,name:"تيبازة"},{code:43,name:"ميلة"},{code:44,name:"عين الدفلى"},
+    {code:45,name:"النعامة"},{code:46,name:"عين تموشنت"},{code:47,name:"غرداية"},{code:48,name:"غليزان"},
+    {code:49,name:"تيميمون"},{code:50,name:"برج باجي مختار"},{code:51,name:"أولاد جلال"},{code:52,name:"بني عباس"},
+    {code:53,name:"عين صالح"},{code:54,name:"عين قزام"},{code:55,name:"تقرت"},{code:56,name:"جانت"},
+    {code:57,name:"المغير"},{code:58,name:"المنيعة"}
+  ];
+
+  /* قائمة سعر التوصيل العادية (سوقلي) — office/home بالدج */
+  const SOUK_PRICES = {
+    1:{office:600,home:1000}, 2:{office:350,home:600}, 3:{office:500,home:750}, 4:{office:400,home:700},
+    5:{office:350,home:650}, 6:{office:300,home:550}, 7:{office:500,home:800}, 8:{office:700,home:1050},
+    9:{office:0,home:250}, 10:{office:400,home:600}, 11:{office:600,home:1200}, 12:{office:450,home:700},
+    13:{office:400,home:700}, 14:{office:400,home:700}, 15:{office:350,home:550}, 16:{office:100,home:250},
+    17:{office:500,home:750}, 18:{office:400,home:600}, 19:{office:350,home:550}, 20:{office:450,home:750},
+    21:{office:400,home:650}, 22:{office:400,home:650}, 23:{office:350,home:550}, 24:{office:400,home:700},
+    25:{office:350,home:550}, 26:{office:400,home:600}, 27:{office:400,home:600}, 28:{office:400,home:650},
+    29:{office:400,home:650}, 30:{office:500,home:800}, 31:{office:300,home:550}, 32:{office:550,home:850},
+    33:{office:900,home:1300}, 34:{office:400,home:600}, 35:{office:350,home:500}, 36:{office:400,home:700},
+    37:{office:900,home:1300}, 38:{office:400,home:700}, 39:{office:500,home:800}, 40:{office:450,home:700},
+    41:{office:450,home:800}, 42:{office:350,home:500}, 43:{office:400,home:650}, 44:{office:400,home:600},
+    45:{office:600,home:900}, 46:{office:450,home:600}, 47:{office:500,home:850}, 48:{office:450,home:600},
+    49:{office:700,home:1200}, 50:null, 51:{office:500,home:800}, 52:{office:1100,home:1100},
+    53:{office:700,home:1200}, 54:null, 55:{office:500,home:850}, 56:null,
+    57:{office:900,home:900}, 58:{office:600,home:900}
+  };
+
+  /* قائمة سعر التوصيل الثانية (baba) — office/home بالدج */
+  const BABA_PRICES = {
+    1:{office:800,home:1000}, 2:{office:600,home:700}, 3:{office:700,home:850}, 4:{office:600,home:700},
+    5:{office:450,home:550}, 6:{office:600,home:700}, 7:{office:600,home:700}, 8:{office:800,home:1000},
+    9:{office:600,home:700}, 10:{office:450,home:550}, 11:{office:1300,home:1500}, 12:{office:700,home:850},
+    13:{office:600,home:700}, 14:{office:600,home:700}, 15:{office:600,home:700}, 16:{office:450,home:550},
+    17:{office:600,home:700}, 18:{office:600,home:700}, 19:{office:450,home:550}, 20:{office:600,home:700},
+    21:{office:600,home:700}, 22:{office:600,home:700}, 23:{office:600,home:700}, 24:{office:600,home:700},
+    25:{office:600,home:700}, 26:{office:450,home:550}, 27:{office:600,home:700}, 28:{office:400,home:500},
+    29:{office:600,home:700}, 30:{office:700,home:850}, 31:{office:600,home:700}, 32:{office:800,home:1000},
+    33:{office:1300,home:1500}, 34:{office:450,home:550}, 35:{office:600,home:700}, 36:{office:600,home:700},
+    37:{office:1300,home:1500}, 38:{office:600,home:700}, 39:{office:700,home:850}, 40:{office:600,home:700},
+    41:{office:600,home:700}, 42:{office:600,home:700}, 43:{office:600,home:700}, 44:{office:600,home:700},
+    45:{office:800,home:1000}, 46:{office:600,home:700}, 47:{office:700,home:850}, 48:{office:600,home:700},
+    49:{office:800,home:1000}, 50:{office:800,home:1000}, 51:{office:600,home:700}, 52:{office:800,home:1000},
+    53:{office:1300,home:1500}, 54:{office:1300,home:1500}, 55:{office:700,home:850}, 56:{office:1300,home:1500},
+    57:{office:700,home:850}, 58:{office:700,home:850}
+  };
+
+  let allProducts = [];
+  let currentProduct = null;
+  let selectedWilaya = null;
+  let selectedDelivery = null;     // 'office' | 'home'
+  let currentDeliveryPrices = null; // {office, home} للمنتج الحالي + الولاية المختارة
+
+  function populateWilayaSelect(){
+    const sel = document.getElementById('f-wilaya');
+    sel.innerHTML = '<option value="">اختر الولاية...</option>' +
+      WILAYAS.map(w => `<option value="${w.code}">${String(w.code).padStart(2,'0')} - ${w.name}</option>`).join('');
+  }
+
+  // يحدد أي قائمة أسعار تستعمل بالاعتماد على خانة express فالمنتج (مخفية على الزبون)
+  function getExpressType(p){
+    const ex = (p.express || '').toString().trim().toLowerCase();
+    if(ex.includes('baba')) return 'baba';
+    if(ex.includes('مجاني')) return 'free';
+    return 'souk';
+  }
+
+  function getDeliveryPrices(expressType, wilayaCode){
+    const souk = SOUK_PRICES[wilayaCode];
+    const baba = BABA_PRICES[wilayaCode];
+
+    if(expressType === 'free'){
+      if(!souk) return null;
+      return { office: 0, home: souk.home - souk.office };
+    }
+    if(expressType === 'baba'){
+      if(!baba) return null;
+      return { office: baba.office, home: baba.home };
+    }
+    if(!souk) return null;
+    return { office: souk.office, home: souk.home };
+  }
+
+  // ====== Load products from Google Sheet (tab "Products") ======
+  async function loadProducts(){
+    const grid = document.getElementById('grid');
+    try{
+      const res = await fetch(`${SHEETDB_API}?sheet=Products`);
+      const data = await res.json();
+
+      if(!Array.isArray(data) || data.length === 0){
+        grid.innerHTML = `<div class="empty-state">لا توجد منتجات حالياً</div>`;
+        document.getElementById('prod-count').textContent = "0 منتج";
+        return;
+      }
+
+      allProducts = data;
+      document.getElementById('prod-count').textContent = `${data.length} منتج`;
+
+      grid.innerHTML = data.map((p, idx) => `
+        <div class="card">
+          <div class="card-img">
+            ${p.image ? `<img src="${p.image}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=\\'ph\\'>📦</div>'">` : `<div class="ph">📦</div>`}
+          </div>
+          <div class="card-body">
+            <h3>${p.name}</h3>
+            <p>${p.description || ''}</p>
+            <div class="price-row">
+              <span class="price">${p.price}</span>
+              <button class="order-btn" onclick="openModal(${idx})">اطلب الآن</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+    }catch(err){
+      grid.innerHTML = `<div class="empty-state">تعذر تحميل المنتجات. تحقق من رابط SheetDB.</div>`;
+      console.error(err);
+    }
+  }
+
+  function openModal(idx){
+    currentProduct = allProducts[idx];
+    selectedWilaya = null;
+    selectedDelivery = null;
+    currentDeliveryPrices = null;
+
+    document.getElementById('modal-product-name').textContent = currentProduct.name;
+    document.getElementById('modal-product-price').textContent = `السعر: ${currentProduct.price} دج`;
+
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-phone').value = '';
+    document.getElementById('f-address').value = '';
+
+    populateWilayaSelect();
+    document.getElementById('f-wilaya').value = '';
+
+    document.getElementById('delivery-options').style.display = 'none';
+    document.getElementById('unavailable-msg').style.display = 'none';
+    document.getElementById('address-wrap').style.display = 'none';
+    document.getElementById('price-summary').style.display = 'none';
+    resetDeliveryCards();
+
+    document.getElementById('status-msg').textContent = '';
+    document.getElementById('status-msg').className = 'status-msg';
+    document.getElementById('submit-btn').disabled = true;
+
+    document.getElementById('overlay').classList.add('active');
+  }
+
+  function closeModal(){
+    document.getElementById('overlay').classList.remove('active');
+  }
+
+  function resetDeliveryCards(){
+    document.getElementById('dc-office').classList.remove('selected');
+    document.getElementById('dc-home').classList.remove('selected');
+  }
+
+  function onWilayaChange(){
+    const code = parseInt(document.getElementById('f-wilaya').value, 10);
+    selectedDelivery = null;
+    currentDeliveryPrices = null;
+    resetDeliveryCards();
+    document.getElementById('address-wrap').style.display = 'none';
+    document.getElementById('price-summary').style.display = 'none';
+    document.getElementById('submit-btn').disabled = true;
+
+    if(!code){
+      selectedWilaya = null;
+      document.getElementById('delivery-options').style.display = 'none';
+      document.getElementById('unavailable-msg').style.display = 'none';
+      return;
+    }
+
+    selectedWilaya = code;
+    const expressType = getExpressType(currentProduct);
+    const prices = getDeliveryPrices(expressType, code);
+
+    if(!prices){
+      document.getElementById('delivery-options').style.display = 'none';
+      document.getElementById('unavailable-msg').style.display = 'block';
+      return;
+    }
+
+    currentDeliveryPrices = prices;
+    document.getElementById('unavailable-msg').style.display = 'none';
+    document.getElementById('delivery-options').style.display = 'block';
+    document.getElementById('dc-office-price').textContent = `${prices.office} دج`;
+    document.getElementById('dc-home-price').textContent = `${prices.home} دج`;
+  }
+
+  function selectDelivery(type){
+    if(!currentDeliveryPrices) return;
+    selectedDelivery = type;
+    resetDeliveryCards();
+    document.getElementById(type === 'office' ? 'dc-office' : 'dc-home').classList.add('selected');
+    document.getElementById('address-wrap').style.display = (type === 'home') ? 'block' : 'none';
+    updatePriceSummary();
+  }
+
+  function updatePriceSummary(){
+    if(!currentDeliveryPrices || !selectedDelivery) return;
+    const deliveryPrice = currentDeliveryPrices[selectedDelivery];
+    const productPrice = parseFloat(currentProduct.price) || 0;
+    const total = productPrice + deliveryPrice;
+
+    document.getElementById('ps-product').textContent = `${productPrice} دج`;
+    document.getElementById('ps-delivery').textContent = `${deliveryPrice} دج`;
+    document.getElementById('ps-total').textContent = `${total} دج`;
+    document.getElementById('price-summary').style.display = 'block';
+
+    checkFormValidity();
+  }
+
+  function checkFormValidity(){
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const address = document.getElementById('f-address').value.trim();
+    const btn = document.getElementById('submit-btn');
+
+    let valid = !!(name && phone && selectedWilaya && selectedDelivery && currentDeliveryPrices);
+    if(selectedDelivery === 'home' && !address) valid = false;
+
+    btn.disabled = !valid;
+  }
+
+  // ====== Submit order to Google Sheet (tab "Orders") ======
+  async function submitOrder(){
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const address = document.getElementById('f-address').value.trim();
+    const statusEl = document.getElementById('status-msg');
+    const btn = document.getElementById('submit-btn');
+
+    if(!name || !phone || !selectedWilaya || !selectedDelivery || !currentDeliveryPrices){
+      statusEl.textContent = "عمر جميع الخانات من فضلك";
+      statusEl.className = "status-msg err";
+      return;
+    }
+    if(selectedDelivery === 'home' && !address){
+      statusEl.textContent = "دخل العنوان من فضلك";
+      statusEl.className = "status-msg err";
+      return;
+    }
+
+    const wilayaObj = WILAYAS.find(w => w.code === selectedWilaya);
+    const deliveryPrice = currentDeliveryPrices[selectedDelivery];
+    const productPrice = parseFloat(currentProduct.price) || 0;
+    const total = productPrice + deliveryPrice;
+    const expressType = getExpressType(currentProduct);
+
+    btn.disabled = true;
+    btn.textContent = "جاري الإرسال...";
+
+    const order = {
+      name: name,
+      phone: phone,
+      wilaya: wilayaObj.name,
+      delivery_type: selectedDelivery === 'office' ? 'مكتب' : 'منزل',
+      address: address || '-',
+      product: currentProduct.name,
+      product_price: productPrice,
+      delivery_price: deliveryPrice,
+      total_price: total,
+      delivery_service: expressType,
+      date: new Date().toLocaleString('fr-FR', {timeZone:'Africa/Algiers'})
+    };
+
+    try{
+      const res = await fetch(`${SHEETDB_API}?sheet=Orders`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ data: [order] })
+      });
+
+      if(res.ok){
+        statusEl.textContent = "✓ تم تسجيل طلبك بنجاح! نتصلو بيك قريباً.";
+        statusEl.className = "status-msg ok";
+        setTimeout(closeModal, 1800);
+      }else{
+        throw new Error('Failed');
+      }
+    }catch(err){
+      statusEl.textContent = "✕ خطأ، حاول مرة أخرى";
+      statusEl.className = "status-msg err";
+    }finally{
+      btn.disabled = false;
+      btn.textContent = "تأكيد الطلب";
+    }
+  }
+
+  // Close modal on outside click
+  document.getElementById('overlay').addEventListener('click', (e) => {
+    if(e.target.id === 'overlay') closeModal();
+  });
+
+  loadProducts();
+</script>
+
+</body>
+</html>
