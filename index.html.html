@@ -267,6 +267,164 @@
 
   .order-btn:hover{background:var(--steel);}
 
+  .info-btn{
+    background:transparent;
+    color:var(--steel);
+    border:1.5px solid #DDD6C5;
+    padding:9px 18px;
+    border-radius:7px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:.9rem;
+    font-family:'Tajawal',sans-serif;
+    transition:all .15s ease;
+    white-space:nowrap;
+    margin-top:8px;
+    width:100%;
+  }
+
+  .info-btn:hover{border-color:var(--steel); color:var(--navy); background:#F4F1E9;}
+
+  /* ===== INFO MODAL ===== */
+  .info-modal{
+    max-width:820px;
+    width:100%;
+    padding:0;
+    overflow:hidden;
+    border-top:5px solid var(--yellow);
+    max-height:90vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .info-modal-body{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    flex:1;
+    overflow:hidden;
+  }
+
+  .info-images{
+    background:#EFEAE0;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    overflow-y:auto;
+  }
+
+  .info-main-img{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:10px;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:border-color .15s;
+  }
+
+  .info-thumbs{
+    display:flex;
+    gap:8px;
+  }
+
+  .info-thumb{
+    flex:1;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:7px;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:border-color .15s, opacity .15s;
+    opacity:.7;
+  }
+
+  .info-thumb:hover, .info-thumb.active{
+    border-color:var(--yellow);
+    opacity:1;
+  }
+
+  .info-content{
+    padding:28px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    overflow-y:auto;
+  }
+
+  .info-content h2{
+    font-size:1.4rem;
+    font-weight:900;
+    color:var(--navy);
+  }
+
+  .info-content .info-price{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:1.3rem;
+    color:var(--navy);
+  }
+
+  .info-content .info-price::after{
+    content:" دج";
+    font-size:.8rem;
+    color:var(--steel);
+  }
+
+  .info-desc{
+    font-size:.92rem;
+    color:#4b5563;
+    line-height:1.8;
+    flex:1;
+  }
+
+  .info-footer{
+    padding:18px 24px;
+    border-top:1px solid #E2DCCB;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    background:#fff;
+  }
+
+  .info-close{
+    background:none;
+    border:1.5px solid #DDD6C5;
+    color:var(--steel);
+    padding:11px 22px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:'Tajawal',sans-serif;
+    font-size:.95rem;
+  }
+
+  .info-close:hover{background:#F4F1E9;}
+
+  .info-order-btn{
+    background:var(--navy);
+    color:var(--yellow);
+    border:none;
+    padding:13px 28px;
+    border-radius:8px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:1rem;
+    font-family:'Tajawal',sans-serif;
+    transition:background .15s;
+    flex:1;
+  }
+
+  .info-order-btn:hover{background:var(--steel);}
+
+  @media (max-width:600px){
+    .info-modal-body{grid-template-columns:1fr; overflow-y:auto;}
+    .info-images{padding:14px;}
+    .info-content{padding:18px 16px;}
+    .info-footer{padding:14px 16px;}
+  }
+
   .empty-state{
     padding:60px 6%;
     text-align:center;
@@ -622,6 +780,29 @@
   </div>
 </div>
 
+<!-- Info Modal -->
+<div class="overlay" id="info-overlay">
+  <div class="modal info-modal">
+    <div class="info-modal-body">
+      <!-- الصور — يمين -->
+      <div class="info-images" id="info-images-panel">
+        <img class="info-main-img" id="info-main-img" src="" alt="">
+        <div class="info-thumbs" id="info-thumbs"></div>
+      </div>
+      <!-- الوصف — يسار -->
+      <div class="info-content">
+        <h2 id="info-name"></h2>
+        <div class="info-price" id="info-price"></div>
+        <p class="info-desc" id="info-desc"></p>
+      </div>
+    </div>
+    <div class="info-footer">
+      <button class="info-close" onclick="closeInfo()">إغلاق</button>
+      <button class="info-order-btn" id="info-order-btn" onclick="openOrderFromInfo()">اطلب الآن ←</button>
+    </div>
+  </div>
+</div>
+
 <footer>
   NEEDS <span class="dot">●</span> Constantine, Algeria <span class="dot">●</span> جميع الحقوق محفوظة
 </footer>
@@ -755,6 +936,7 @@
               <span class="price">${p.price}</span>
               <button class="order-btn" onclick="openModal(${idx})">اطلب الآن</button>
             </div>
+            <button class="info-btn" onclick="openInfo(${idx})">📋 معلومات</button>
           </div>
         </div>
       `).join('');
@@ -968,6 +1150,61 @@
   // Close modal on outside click
   document.getElementById('overlay').addEventListener('click', (e) => {
     if(e.target.id === 'overlay') closeModal();
+  });
+
+  // ====== Info Modal ======
+  let infoProductIdx = null;
+
+  function openInfo(idx){
+    infoProductIdx = idx;
+    const p = allProducts[idx];
+    const imgs = [p['صورة1']||p.image, p['صورة2'], p['صورة3']].filter(Boolean);
+
+    document.getElementById('info-name').textContent = p.name;
+    document.getElementById('info-price').textContent = p.price;
+    document.getElementById('info-desc').textContent = (p['وصف مفصل'] || p.description || '').replace(/[\r\n]+/g, '\n').trim();
+
+    // Main image
+    const mainImg = document.getElementById('info-main-img');
+    mainImg.src = imgs[0] || '';
+    mainImg.style.display = imgs.length ? 'block' : 'none';
+
+    // Thumbnails
+    const thumbsEl = document.getElementById('info-thumbs');
+    if(imgs.length > 1){
+      thumbsEl.innerHTML = imgs.map((src, i) => `
+        <img class="info-thumb${i===0?' active':''}" src="${src}" alt=""
+          onclick="switchInfoImg(this,'${src}')">
+      `).join('');
+      thumbsEl.style.display = 'flex';
+    } else {
+      thumbsEl.innerHTML = '';
+      thumbsEl.style.display = 'none';
+    }
+
+    // Hide images panel if no images
+    document.getElementById('info-images-panel').style.display = imgs.length ? '' : 'none';
+
+    document.getElementById('info-overlay').classList.add('active');
+  }
+
+  function switchInfoImg(thumbEl, src){
+    document.getElementById('info-main-img').src = src;
+    document.querySelectorAll('.info-thumb').forEach(t => t.classList.remove('active'));
+    thumbEl.classList.add('active');
+  }
+
+  function closeInfo(){
+    document.getElementById('info-overlay').classList.remove('active');
+  }
+
+  function openOrderFromInfo(){
+    closeInfo();
+    openModal(infoProductIdx);
+  }
+
+  document.getElementById('info-overlay').addEventListener('click', (e) => {
+    if(e.target.id === 'info-overlay') closeInfo();
   });
 
   loadProducts();
