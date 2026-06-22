@@ -624,6 +624,52 @@
     font-size:.92rem;
   }
 
+  /* ===== LIGHTBOX ===== */
+  .lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.92);
+    z-index:200;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    cursor:zoom-out;
+  }
+
+  .lightbox.active{display:flex;}
+
+  .lightbox img{
+    max-width:100%;
+    max-height:90vh;
+    border-radius:8px;
+    object-fit:contain;
+    animation:pop .2s ease;
+  }
+
+  .lightbox-close{
+    position:absolute;
+    top:16px;
+    left:16px;
+    background:rgba(255,255,255,.15);
+    border:none;
+    color:#fff;
+    font-size:1.4rem;
+    width:40px;height:40px;
+    border-radius:50%;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    line-height:1;
+  }
+
+  .lightbox-close:hover{background:rgba(255,255,255,.25);}
+
+  .info-modal-imgs img{
+    cursor:zoom-in;
+  }
+
   /* ===== FOOTER ===== */
   footer{
     background:var(--navy);
@@ -753,6 +799,12 @@
       <button class="info-order-btn" onclick="openOrderFromInfo()">اطلب الآن ←</button>
     </div>
   </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
 </div>
 
 <footer>
@@ -1127,7 +1179,7 @@
 
     const imgsEl = document.getElementById('info-imgs');
     imgsEl.innerHTML = imgs.map(src =>
-      `<img src="${src}" alt="${p.name}" onerror="this.style.display='none'">`
+      `<img src="${src}" alt="${p.name}" onclick="openLightbox('${src}')" onerror="this.style.display='none'">`
     ).join('');
 
     document.getElementById('info-overlay').classList.add('active');
@@ -1144,6 +1196,20 @@
 
   document.getElementById('info-overlay').addEventListener('click', (e) => {
     if(e.target.id === 'info-overlay') closeInfo();
+  });
+
+  // ====== Lightbox ======
+  function openLightbox(src){
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+
+  function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('active');
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') closeLightbox();
   });
 
   loadProducts();
